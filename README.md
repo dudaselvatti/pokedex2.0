@@ -1,75 +1,28 @@
-# React + TypeScript + Vite
+# PokéDex em React ⚡
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Alunos:**
+* Lucas Bento da Silva Batista - GU3042669
+* Maria Eduarda Alves Selvatti - GU3046109
 
-Currently, two official plugins are available:
+**Disciplina:** GRUDSMV - Desenvolvimento para Dispositivos Móveis  
+**Professor:** Giovani Disperati  
+**Turma:** Engenharia da Computação - 7º Semestre (2026.1)  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🎯 Sobre a Atividade
+Resolução dos exercícios práticos da **Aula 03 - Introdução ao React (Componentes, Props e Hooks)**.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## ✅ O que foi entregue
+* Refatoração e uso de **Props** com o componente `PokeCard`.
+* Funcionalidade de Favoritar (⭐) usando **useState**.
+* Mensagem de sucesso no console utilizando **useEffect**.
+* Estilização modular com arquivos separados (`Pokedex.css` e `PokeCard.css`).
+* **🌟 Desafios Extras:** Busca de múltiplos Pokémons em Grid e armazenamento dos favoritos no `localStorage`.
 
-Note: This will impact Vite dev & build performances.
+## 🛠️ Como rodar o projeto localmente
+No terminal da pasta do projeto, execute os comandos:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+```bash
+npm install
+npm run dev

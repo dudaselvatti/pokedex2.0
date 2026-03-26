@@ -1,42 +1,39 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { PokeCard, type Pokemon } from "./PokeCard";
 import "./Pokedex.css";
-
-// Definindo o tipo com base no json para simplificar a implementação
-type Pokemon = {
-  name: string;
-  height: number;
-  weight: number;
-  sprites: {
-    front_default: string | null;
-  };
-  types: Array<{
-    type: { name: string };
-  }>;
-};
 
 export default function Pokedex() {
   const [nome, setNome] = useState("");
   const [carregando, setCarregando] = useState(false);
-
-  const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [erro, setErro] = useState("");
+
+  const [listaPokemons, setListaPokemons] = useState<Pokemon[]>([]);
 
   const buscarPokemon = async () => {
     if (!nome.trim()) return;
 
     setCarregando(true);
     setErro("");
-    setPokemon(null);
 
     try {
       const resposta = await fetch(
         `https://pokeapi.co/api/v2/pokemon/${nome.toLowerCase()}`
       );
+      
       if (!resposta.ok) throw new Error("Pokémon não encontrado");
 
-      // Convertemos o JSON dizendo ao TS que ele tem formato Pokemon 
       const dados: Pokemon = await resposta.json();
-      setPokemon(dados);
+
+      const jaExiste = listaPokemons.find((p) => p.name === dados.name);
+      
+      if (!jaExiste) {
+        setListaPokemons((listaAnterior) => [dados, ...listaAnterior]);
+      } else {
+        setErro("Esse Pokémon já está na sua tela!");
+      }
+      
+      setNome("");
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       setErro("Pokémon não encontrado 😢");
@@ -46,7 +43,7 @@ export default function Pokedex() {
   };
 
   return (
-    <div className="pokedex-container">
+    <div className={`pokedex-container ${listaPokemons.length >= 3 ? "expandido" : ""}`}>
       <h2 className="pokedex-title">🔎 Pokédex</h2>
 
       <input
@@ -64,28 +61,11 @@ export default function Pokedex() {
       {carregando && <p className="pokedex-loading">Carregando...</p>}
       {erro && <p className="pokedex-error">{erro}</p>}
 
-      {pokemon && (
-        <div className="pokedex-card">
-          <h3 className="pokedex-name">{pokemon.name}</h3>
-          {pokemon.sprites.front_default && (
-            <img
-              src={pokemon.sprites.front_default}
-              alt={pokemon.name}
-              className="pokedex-image"
-            />
-          )}
-          <p>
-            <strong>Altura:</strong> {pokemon.height * 10} cm
-          </p>
-          <p>
-            <strong>Peso:</strong> {pokemon.weight / 10} kg
-          </p>
-          <p>
-            <strong>Tipos:</strong>{" "}
-            {pokemon.types.map((t) => t.type.name).join(" / ")}
-          </p>
-        </div>
-      )}
+      <div className="pokedex-grid">
+        {listaPokemons.map((pokemon) => (
+          <PokeCard key={pokemon.name} pokemon={pokemon} />
+        ))}
+      </div>
     </div>
   );
 }
